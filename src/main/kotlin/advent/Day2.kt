@@ -77,12 +77,12 @@ object Day2 {
     fun score(me: Play, you: Play) = me.score + me.vs(you).score
     fun score(me: Char, you: Char) = score(Play.fromChar(me), Play.fromChar(you))
 
-    fun playPart1Game(game: String) = game.split("\n").map { score(it[2], it[0]) }.sum()
+    fun playPart1Game(game: String) = game.split("\n").sumOf { score(it[2], it[0]) }
 
-    fun playPart2Game(game: String) = game.split("\n").map {
+    fun playPart2Game(game: String) = game.split("\n").sumOf {
         val you = Play.fromChar(it[0])
         val result = Result.fromChar(it[2])
         val me = result.against(you)
         score(me, you)
-    }.sum()
+    }
 }
