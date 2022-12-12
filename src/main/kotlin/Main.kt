@@ -1,12 +1,10 @@
-import advent.Day1
-import advent.Day2
-import advent.Day3
-import advent.Input
+import advent.*
 
 fun main() {
     day1()
     day2()
     day3()
+    day4()
 }
 
 private fun day1() {
@@ -34,4 +32,13 @@ private fun day3() {
 
     val part2 = Day3.sumBadgePriorities(input)
     println("Day 3 part 2: $part2")
+}
+
+private fun day4() {
+    val input = Input.forDay(4).split("\n")
+    val part1 = Day4.countFullyContainedRanges(input)
+    println("Day 4 part 1: $part1")
+
+    val part2 = Day4.countOverlappingRanges(input)
+    println("Day 4 part 2: $part2")
 }
