@@ -2,12 +2,20 @@ package advent
 
 typealias Crate = Char
 typealias Stack = ArrayDeque<Crate>
+typealias StacksByLabel = Map<Char, Stack>
 
 fun Stack.push(crate: Crate) = addLast(crate)
 fun Stack.pop() = removeLast()
 
+fun StacksByLabel.moveCrates9000(count: Int, from: Char, to: Char) {
+    repeat(count) { this[to]!!.push(this[from]!!.pop()) }
+}
+
+fun StacksByLabel.topCrates() =
+    toSortedMap().values.fold("") { acc, it -> acc + it.last() }
+
 object Day5 {
-    fun parseDrawing(drawing: String): Map<Char, Stack> {
+    fun parseDrawing(drawing: String): StacksByLabel {
         val lines = drawing.split("\n").reversed()
         val stackNames = stackNamesByIndex(lines[0])
         val stacks = stackNames.values.fold(mapOf<Char, Stack>()) { acc, name -> acc + Pair(name, Stack()) }
@@ -16,7 +24,7 @@ object Day5 {
         return stacks
     }
 
-    private fun extractCratesForEachStack(line: String, stackNames: Map<Int, Char>, stacks: Map<Char, Stack>) {
+    private fun extractCratesForEachStack(line: String, stackNames: Map<Int, Char>, stacks: StacksByLabel) {
         stackNames.entries.forEach { entry ->
             val crate = line[entry.key]
             if (crate != ' ') stacks[entry.value]!!.push(crate)
@@ -27,7 +35,13 @@ object Day5 {
         if (ch != ' ') acc + Pair(i, ch) else acc
     }
 
-    fun moveCrates(count: Int, from: Char, to: Char): Map<Int, Stack> {
-        TODO("Not yet implemented")
+    /**
+     * "move n from A to B"
+     */
+    fun moveCrates9000(stacksByLabel: StacksByLabel, moves: List<String>) {
+        moves.forEach { move ->
+            val words = move.split(' ')
+            stacksByLabel.moveCrates9000(words[1].toInt(), words[3][0], words[5][0])
+        }
     }
 }

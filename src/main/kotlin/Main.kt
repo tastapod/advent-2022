@@ -5,6 +5,7 @@ fun main() {
     day2()
     day3()
     day4()
+    day5()
 }
 
 private fun day1() {
@@ -41,4 +42,13 @@ private fun day4() {
 
     val part2 = Day4.countOverlappingRanges(input)
     println("Day 4 part 2: $part2")
+}
+
+private fun day5() {
+    val input = Input.forDay(5).split("\n\n")
+    val stacks = Day5.parseDrawing(input[0])
+    Day5.moveCrates9000(stacks, input[1].split("\n"))
+    val part1 = stacks.topCrates()
+    println("Day 5 part 1: $part1")
+
 }
