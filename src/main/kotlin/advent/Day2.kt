@@ -1,6 +1,5 @@
 package advent
 
-
 enum class Result(val score: Int) {
     Win(6) {
         override fun against(play: Play) = when (play) {
