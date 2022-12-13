@@ -11,6 +11,15 @@ fun StacksByLabel.moveCrates9000(count: Int, from: Char, to: Char) {
     repeat(count) { this[to]!!.push(this[from]!!.pop()) }
 }
 
+fun StacksByLabel.moveCrates9001(count: Int, from: Char, to: Char) {
+    val source = this[from]!!
+    val sourceLen = source.size
+    val target = this[to]!!
+
+    target.addAll(source.subList(sourceLen - count, sourceLen))
+    repeat(count) { source.pop() }
+}
+
 fun StacksByLabel.topCrates() =
     toSortedMap().values.fold("") { acc, it -> acc + it.last() }
 
@@ -42,6 +51,16 @@ object Day5 {
         moves.forEach { move ->
             val words = move.split(' ')
             stacksByLabel.moveCrates9000(words[1].toInt(), words[3][0], words[5][0])
+        }
+    }
+
+    /**
+     * "move n from A to B"
+     */
+    fun moveCrates9001(stacksByLabel: StacksByLabel, moves: List<String>) {
+        moves.forEach { move ->
+            val words = move.split(' ')
+            stacksByLabel.moveCrates9001(words[1].toInt(), words[3][0], words[5][0])
         }
     }
 }
