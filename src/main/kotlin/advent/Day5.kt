@@ -1,30 +1,33 @@
 package advent
 
-// Use familiar terms for stacks
-typealias Stack<E> = ArrayDeque<E>
-typealias StacksByIndex = Map<Int, Stack<Char>>
+typealias Crate = Char
+typealias Stack = ArrayDeque<Crate>
 
-fun <E> Stack<E>.push(element: E) = addLast(element)
-fun <E> Stack<E>.pop() = removeLast()
+fun Stack.push(crate: Crate) = addLast(crate)
+fun Stack.pop() = removeLast()
 
 object Day5 {
-    fun parseDrawing(drawing: String): StacksByIndex {
+    fun parseDrawing(drawing: String): Map<Char, Stack> {
         val lines = drawing.split("\n").reversed()
+        val stackNames = stackNamesByIndex(lines[0])
+        val stacks = stackNames.values.fold(mapOf<Char, Stack>()) { acc, name -> acc + Pair(name, Stack()) }
 
-        val stacks = identifyStacks(lines[0])
-        lines.drop(1).forEach { extractCratesForEachStack(it, stacks) }
+        lines.drop(1).forEach { extractCratesForEachStack(it, stackNames, stacks) }
         return stacks
     }
 
-    private fun extractCratesForEachStack(line: String, stacks: Map<Int, Stack<Char>>) {
-        stacks.entries.forEach { entry ->
+    private fun extractCratesForEachStack(line: String, stackNames: Map<Int, Char>, stacks: Map<Char, Stack>) {
+        stackNames.entries.forEach { entry ->
             val crate = line[entry.key]
-            if (crate != ' ') entry.value.push(crate)
+            if (crate != ' ') stacks[entry.value]!!.push(crate)
         }
     }
 
-    private fun identifyStacks(line: String): StacksByIndex =
-        line.foldIndexed(mapOf<Int, Stack<Char>>()) { i, acc, ch ->
-            if (ch != ' ') acc + Pair(i, Stack()) else acc
-        }
+    private fun stackNamesByIndex(line: String) = line.foldIndexed(mapOf<Int, Char>()) { i, acc, ch ->
+        if (ch != ' ') acc + Pair(i, ch) else acc
+    }
+
+    fun moveCrates(count: Int, from: Char, to: Char): Map<Int, Stack> {
+        TODO("Not yet implemented")
+    }
 }
