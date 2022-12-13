@@ -1,6 +1,5 @@
 package advent
 
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -12,12 +11,14 @@ class Day5Test {
              1   2   3 
         """.trimIndent()
 
+    private fun stack(label: Char, vararg crates: Crate) = Pair(label, Stack(crates.asList()))
+
     @Test
     fun `parses drawing of crates`() {
         val expected = mapOf(
-            Pair('1', Stack(listOf('Z', 'N'))),
-            Pair('2', Stack(listOf('M', 'C', 'D'))),
-            Pair('3', Stack(listOf('P'))),
+            stack('1', 'Z', 'N'),
+            stack('2', 'M', 'C', 'D'),
+            stack('3', 'P'),
         )
 
         assertEquals(expected, Day5.parseDrawing(sampleDrawing))
@@ -25,28 +26,50 @@ class Day5Test {
 
     @Test
     fun `moves crates`() {
-        val stacksByIndex = mapOf(
-            Pair('1', Stack(listOf('A', 'B'))),
-            Pair('2', Stack(listOf('C'))),
+        val stacks = mapOf(
+            stack('1', 'A', 'B'),
+            stack('2', 'C'),
         )
 
         val expected = mapOf(
-            Pair(3, Stack(listOf('A'))),
-            Pair(7, Stack(listOf('C', 'B'))),
+            stack('1', 'A'),
+            stack('2', 'C', 'B'),
         )
 
-        assertEquals(expected, Day5.moveCrates(1, '1', '2'))
+        stacks.moveCrates9000(1, '1', '2')
+
+        assertEquals(expected, stacks)
     }
 
     @Test
-    @Ignore
+    fun `finds top crates`() {
+        val stacks = mapOf(
+            stack('1', 'A', 'B'),
+            stack('2', 'C'),
+        )
+
+        assertEquals("BC", stacks.topCrates())
+    }
+
+    @Test
     fun `moves sample crates`() {
-        val crateMaps = Day5.parseDrawing(sampleDrawing)
+        val stacksByLabel = Day5.parseDrawing(sampleDrawing)
+
         val moves = """
             move 1 from 2 to 1
             move 3 from 1 to 3
             move 2 from 2 to 1
             move 1 from 1 to 2
-        """.trimIndent()
+        """.trimIndent().split("\n")
+
+        val expected = mapOf(
+            stack('1', 'C'),
+            stack('2', 'M'),
+            stack('3', 'P', 'D', 'N', 'Z')
+        )
+
+        Day5.moveCrates9000(stacksByLabel, moves)
+
+        assertEquals(expected, stacksByLabel)
     }
 }
