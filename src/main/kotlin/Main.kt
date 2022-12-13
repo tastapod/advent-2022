@@ -46,9 +46,16 @@ private fun day4() {
 
 private fun day5() {
     val input = Input.forDay(5).split("\n\n")
-    val stacks = Day5.parseDrawing(input[0])
-    Day5.moveCrates9000(stacks, input[1].split("\n"))
+    val drawing = input[0]
+    val moves = input[1].split("\n")
+
+    var stacks = Day5.parseDrawing(drawing)
+    Day5.moveCrates9000(stacks, moves)
     val part1 = stacks.topCrates()
     println("Day 5 part 1: $part1")
 
+    stacks = Day5.parseDrawing(drawing) // reset
+    Day5.moveCrates9001(stacks, moves)
+    val part2 = stacks.topCrates()
+    println("Day 5 part 2: $part2")
 }
