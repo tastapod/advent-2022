@@ -6,6 +6,7 @@ fun main() {
     day3()
     day4()
     day5()
+    day6()
 }
 
 private fun day1() {
@@ -58,4 +59,13 @@ private fun day5() {
     Day5.moveCrates9001(stacks, moves)
     val part2 = stacks.topCrates()
     println("Day 5 part 2: $part2")
+}
+
+private fun day6() {
+    val input = Input.forDay(6)
+    val part1 = Day6.findStartOfPacket(input)
+    println("Day 6 part 1: $part1")
+
+    val part2 = Day6.findStartOfMessage(input)
+    println("Day 6 part 2: $part2")
 }
