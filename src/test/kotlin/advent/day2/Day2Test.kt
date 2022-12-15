@@ -1,4 +1,4 @@
-package advent
+package advent.day2
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -9,8 +9,8 @@ class Day2Test {
         assertEquals(Result.Lose, Play.Rock.vs(Play.Paper))
         assertEquals(Result.Draw, Play.Paper.vs(Play.Paper))
 
-        assertEquals(6+2, Day2.score(Play.Paper, Play.Rock))
-        assertEquals(3+1, Day2.score(Play.Rock, Play.Rock))
+        assertEquals(6 + 2, score(Play.Paper, Play.Rock))
+        assertEquals(3 + 1, score(Play.Rock, Play.Rock))
     }
 
     @Test
@@ -24,8 +24,8 @@ class Day2Test {
 
     @Test
     fun `calculates score from chars`() {
-        assertEquals(6+2, Day2.score('B', 'X'))
-        assertEquals(3+1, Day2.score('A', 'X'))
+        assertEquals(6 + 2, score('B', 'X'))
+        assertEquals(3 + 1, score('A', 'X'))
     }
 
     private val sampleGame = """
@@ -36,7 +36,7 @@ class Day2Test {
 
     @Test
     fun `scores part 1 game`() {
-        assertEquals(15, Day2.playPart1Game(sampleGame))
+        assertEquals(15, playPart1Game(sampleGame))
     }
 
     @Test
@@ -46,6 +46,6 @@ class Day2Test {
 
     @Test
     fun `scores part 2 game`() {
-        assertEquals(12, Day2.playPart2Game(sampleGame))
+        assertEquals(12, playPart2Game(sampleGame))
     }
 }

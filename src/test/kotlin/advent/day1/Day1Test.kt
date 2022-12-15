@@ -1,4 +1,4 @@
-package advent
+package advent.day1
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -16,20 +16,20 @@ class Day1Test {
     @Test
     fun `gathers food`() {
 
-        val totals = Day1.sumCalories(input)
+        val totals = sumCalories(input)
 
-        assertEquals(totals, listOf<Int>(60, 30))
+        assertEquals(totals, listOf(60, 30))
     }
 
     @Test
     fun `finds largest calories`() {
-        val largest = Day1.largestCalories(listOf(60, 30))
+        val largest = largestCalories(listOf(60, 30))
         assertEquals(60, largest)
     }
 
     @Test
     fun `sums top three largest`() {
-        val topThree = Day1.topThree(listOf(100, 3, 300, 4, 5, 200, 6))
+        val topThree = topThree(listOf(100, 3, 300, 4, 5, 200, 6))
         assertEquals(600, topThree)
     }
 }

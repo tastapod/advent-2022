@@ -1,4 +1,4 @@
-package advent
+package advent.day2
 
 enum class Result(val score: Int) {
     Win(6) {
@@ -72,16 +72,14 @@ enum class Play(val score: Int) {
     }
 }
 
-object Day2 {
-    fun score(me: Play, you: Play) = me.score + me.vs(you).score
-    fun score(me: Char, you: Char) = score(Play.fromChar(me), Play.fromChar(you))
+fun score(me: Play, you: Play) = me.score + me.vs(you).score
+fun score(me: Char, you: Char) = score(Play.fromChar(me), Play.fromChar(you))
 
-    fun playPart1Game(game: String) = game.split("\n").sumOf { score(it[2], it[0]) }
+fun playPart1Game(game: String) = game.split("\n").sumOf { score(it[2], it[0]) }
 
-    fun playPart2Game(game: String) = game.split("\n").sumOf {
-        val you = Play.fromChar(it[0])
-        val result = Result.fromChar(it[2])
-        val me = result.against(you)
-        score(me, you)
-    }
+fun playPart2Game(game: String) = game.split("\n").sumOf {
+    val you = Play.fromChar(it[0])
+    val result = Result.fromChar(it[2])
+    val me = result.against(you)
+    score(me, you)
 }

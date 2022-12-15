@@ -1,4 +1,4 @@
-package advent
+package advent.day5
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,7 +21,7 @@ class Day5Test {
             stack('3', 'P'),
         )
 
-        assertEquals(expected, Day5.parseDrawing(sampleDrawing))
+        assertEquals(expected, parseDrawing(sampleDrawing))
     }
 
     @Test
@@ -53,7 +53,7 @@ class Day5Test {
 
     @Test
     fun `moves sample crates`() {
-        val stacksByLabel = Day5.parseDrawing(sampleDrawing)
+        val stacksByLabel = parseDrawing(sampleDrawing)
 
         val moves = """
             move 1 from 2 to 1
@@ -68,7 +68,7 @@ class Day5Test {
             stack('3', 'P', 'D', 'N', 'Z')
         )
 
-        Day5.moveCrates9000(stacksByLabel, moves)
+        moveCrates9000(stacksByLabel, moves)
         assertEquals(expected, stacksByLabel)
     }
 
@@ -91,7 +91,7 @@ class Day5Test {
 
     @Test
     fun `moves sample crates in bulk`() {
-        val stacksByLabel = Day5.parseDrawing(sampleDrawing)
+        val stacksByLabel = parseDrawing(sampleDrawing)
 
         val moves = """
             move 1 from 2 to 1
@@ -106,7 +106,7 @@ class Day5Test {
             stack('3', 'P', 'Z', 'N', 'D')
         )
 
-        Day5.moveCrates9001(stacksByLabel, moves)
+        moveCrates9001(stacksByLabel, moves)
         assertEquals(expected, stacksByLabel)
     }
 
