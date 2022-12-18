@@ -13,6 +13,7 @@ import advent.day5.parseDrawing
 import advent.day5.topCrates
 import advent.day6.findStartOfMessage
 import advent.day6.findStartOfPacket
+import advent.day7.Shell
 
 fun main() {
     day1()
@@ -21,6 +22,7 @@ fun main() {
     day4()
     day5()
     day6()
+    day7()
 }
 
 private fun day1() {
@@ -82,4 +84,10 @@ private fun day6() {
 
     val part2 = findStartOfMessage(input)
     println("Day 6 part 2: $part2")
+}
+
+private fun day7() {
+    val input = Input.forDay(7)
+    val part1 = Shell().executeScript(input).root.sumDirectoriesBelowSize(100000)
+    println("Day 7 part 1: $part1")
 }
