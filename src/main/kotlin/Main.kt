@@ -14,6 +14,7 @@ import advent.day5.topCrates
 import advent.day6.findStartOfMessage
 import advent.day6.findStartOfPacket
 import advent.day7.Shell
+import advent.day8.Grid
 
 fun main() {
     day1()
@@ -23,6 +24,7 @@ fun main() {
     day5()
     day6()
     day7()
+    day8()
 }
 
 private fun day1() {
@@ -94,4 +96,11 @@ private fun day7() {
 
     val part2 = shell.fs.smallestDirToEnsureSpace(30_000_000).size
     println("Day 7 part 2: $part2")
+}
+
+private fun day8() {
+    val input = Input.forDay(8).lines()
+    val grid = Grid(input)
+    val part1 = grid.visibleTrees().count()
+    println("Day 8 part 1: $part1")
 }
