@@ -4,7 +4,7 @@ data class CommandBlock(val command: String, val output: List<String> = emptyLis
 
 class Shell(val fs: Filesystem = Filesystem(Dir("/")), var currentDir: Dir = fs.root) {
 
-    constructor(root: Dir): this(Filesystem(root))
+    constructor(root: Dir) : this(Filesystem(root))
 
     fun executeCommand(command: String, output: List<String> = emptyList()) =
         executeCommand(CommandBlock(command, output))
@@ -31,7 +31,11 @@ class Shell(val fs: Filesystem = Filesystem(Dir("/")), var currentDir: Dir = fs.
     }
 
     fun parseCommands(input: String) =
-        input.split(Regex("\n?\\$ ")).drop(1).map { lines -> lines.split("\n").let { CommandBlock(it[0], it.drop(1)) } }
+        input.split(Regex("\n?\\$ ")).drop(1)
+            .map { lines ->
+                lines.split("\n")
+                    .let { CommandBlock(it[0], it.drop(1)) }
+            }
 
     fun executeScript(input: String) =
         apply { parseCommands(input).forEach { executeCommand(it) } }

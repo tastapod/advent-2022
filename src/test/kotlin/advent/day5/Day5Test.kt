@@ -60,7 +60,7 @@ class Day5Test {
             move 3 from 1 to 3
             move 2 from 2 to 1
             move 1 from 1 to 2
-        """.trimIndent().split("\n")
+        """.trimIndent().lines()
 
         val expected = mapOf(
             stack('1', 'C'),
@@ -98,7 +98,7 @@ class Day5Test {
             move 3 from 1 to 3
             move 2 from 2 to 1
             move 1 from 1 to 2
-        """.trimIndent().split("\n")
+        """.trimIndent().lines()
 
         val expected = mapOf(
             stack('1', 'M'),

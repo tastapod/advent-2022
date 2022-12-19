@@ -24,7 +24,7 @@ fun StacksByLabel.topCrates() =
     toSortedMap().values.fold("") { acc, it -> acc + it.last() }
 
 fun parseDrawing(drawing: String): StacksByLabel {
-    val lines = drawing.split("\n").reversed()
+    val lines = drawing.lines().reversed()
     val stackNames = stackNamesByIndex(lines[0])
     val stacks = stackNames.values.fold(mapOf<Char, Stack>()) { acc, name -> acc + Pair(name, Stack()) }
 

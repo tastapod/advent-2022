@@ -38,7 +38,7 @@ class Day7Test {
                 14848514 b.txt
                 8504156 c.dat
                 dir d
-            """.trimIndent().split("\n"))
+            """.trimIndent().lines())
 
         // then
         val expectedContents = mutableSetOf(

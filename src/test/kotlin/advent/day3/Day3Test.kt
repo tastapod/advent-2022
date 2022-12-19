@@ -11,7 +11,7 @@ class Day3Test {
         wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
         ttgJtRGJQctTZtZT
         CrZsJsPPZsGzwwsLwLmpwMDw
-    """.trimIndent().split("\n")
+    """.trimIndent().lines()
 
     @Test
     fun `finds duplicate item`() {
