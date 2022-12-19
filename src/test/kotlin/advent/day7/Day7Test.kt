@@ -8,20 +8,22 @@ class Day7Test {
     @Test
     fun `moves to tree root`() {
         // given
-        val rootDir = Dir("/", null)
-        val a = Dir("a", rootDir)
-        rootDir.contents.addAll(
-            listOf(
-                a, File("b.txt", 14848514), File("c.dat", 8504156), Dir("d", rootDir)))
-        val shell = Shell(rootDir, a)
-
-        assertEquals(a, shell.currentDir)
+        val a: Dir
+        val root = Dir("/", null).apply {
+            contents.addAll(
+                listOf(
+                    Dir("a", this).also { a = it },
+                    File("b.txt", 14848514),
+                    File("c.dat", 8504156),
+                    Dir("d", this)))
+        }
+        val shell = Shell(root).apply { currentDir = a }
 
         // when
         shell.executeCommand("cd /")
 
         // then
-        assertEquals(shell.fs.root, shell.currentDir)
+        assertEquals(root, shell.currentDir)
     }
 
     @Test
@@ -203,7 +205,7 @@ class Day7Test {
         // given
         val capacity = 70_000_000
         val spaceRequired = 30_000_000
-        val shell = Shell(Dir("/", capacity = capacity)).executeScript(sampleInput)
+        val shell = Shell(Filesystem(capacity = capacity)).executeScript(sampleInput)
 
         // when
         val smallestDir = shell.fs.smallestDirToEnsureSpace(spaceRequired)
