@@ -2,7 +2,10 @@ package advent.day7
 
 data class CommandBlock(val command: String, val output: List<String> = emptyList())
 
-class Shell(val root: Dir = Dir("/"), var currentDir: Dir = root) {
+class Shell(val fs: Filesystem = Filesystem(Dir("/")), var currentDir: Dir = fs.root) {
+
+    constructor(root: Dir, currentDir: Dir = root): this(Filesystem(root), currentDir)
+
     fun executeCommand(command: String, output: List<String> = emptyList()) =
         executeCommand(CommandBlock(command, output))
 
@@ -12,8 +15,8 @@ class Shell(val root: Dir = Dir("/"), var currentDir: Dir = root) {
                 command == "ls" -> addContents(output)
                 command.startsWith("cd") -> currentDir =
                     when (val dir = command.split(" ")[1]) {
-                        "/" -> root
-                        ".." -> currentDir.up ?: root
+                        "/" -> fs.root
+                        ".." -> currentDir.up ?: fs.root
                         else -> currentDir.contents.find { it.name == dir } as Dir
                     }
             }

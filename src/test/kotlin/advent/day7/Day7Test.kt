@@ -21,7 +21,7 @@ class Day7Test {
         shell.executeCommand("cd /")
 
         // then
-        assertEquals(shell.root, shell.currentDir)
+        assertEquals(shell.fs.root, shell.currentDir)
     }
 
     @Test
@@ -40,9 +40,9 @@ class Day7Test {
 
         // then
         val expectedContents = mutableSetOf(
-            Dir("a", shell.root), File("b.txt", 14848514), Dir("d", shell.root), File("c.dat", 8504156))
+            Dir("a", shell.fs.root), File("b.txt", 14848514), Dir("d", shell.fs.root), File("c.dat", 8504156))
 
-        assertEquals(expectedContents, shell.root.contents)
+        assertEquals(expectedContents, shell.fs.root.contents)
     }
 
     @Test
@@ -66,7 +66,7 @@ class Day7Test {
     @Test
     fun `sums sizes of small directories`() {
         // given
-        val root = Dir("/", null).apply {
+        val fs = Filesystem(Dir("/", null).apply {
             contents.addAll(
                 listOf(
                     Dir("a", this).apply {
@@ -87,9 +87,9 @@ class Day7Test {
                             File("b2", 40),
                         )),
                 ))
-        }
+        })
 
-        assertEquals(100, root.sumDirectoriesBelowSize(100))
+        assertEquals(100, fs.sumDirectoriesBelowSize(100))
     }
 
     @Test
@@ -107,7 +107,7 @@ class Day7Test {
 
         // then
         assertEquals("a", shell.currentDir.name)
-        assertNotEquals(shell.root, shell.currentDir)
+        assertNotEquals(shell.fs.root, shell.currentDir)
     }
 
     @Test
@@ -122,13 +122,13 @@ class Day7Test {
 
         shell.executeCommand("cd a")
         assertEquals("a", shell.currentDir.name)
-        assertNotEquals(shell.root, shell.currentDir)
+        assertNotEquals(shell.fs.root, shell.currentDir)
 
         // when
         shell.executeCommand("cd ..")
 
         // then
-        assertEquals(shell.root, shell.currentDir)
+        assertEquals(shell.fs.root, shell.currentDir)
     }
 
     @Test
@@ -155,19 +155,17 @@ class Day7Test {
         val commands = shell.parseCommands(input)
 
         // then
-        assertEquals(listOf(
-            CommandBlock("cd /"),
-            CommandBlock("ls", listOf("dir a", "10 b.txt", "20 c.dat", "dir d")),
-            CommandBlock("cd a"),
-            CommandBlock("ls", listOf("dir e", "30 f", "40 g")),
-            CommandBlock("cd ..")
-        ), commands)
+        assertEquals(
+            listOf(
+                CommandBlock("cd /"),
+                CommandBlock("ls", listOf("dir a", "10 b.txt", "20 c.dat", "dir d")),
+                CommandBlock("cd a"),
+                CommandBlock("ls", listOf("dir e", "30 f", "40 g")),
+                CommandBlock("cd ..")
+            ), commands)
     }
 
-    @Test
-    fun `calculates small directories in sample`() {
-        // given
-        val input = """
+    private val sampleInput = """
             $ cd /
             $ ls
             dir a
@@ -193,12 +191,25 @@ class Day7Test {
             7214296 k
         """.trimIndent()
 
-        val shell = Shell()
+
+    @Test
+    fun `calculates small directories in sample`() {
+        val shell = Shell().executeScript(sampleInput)
+        assertEquals(95437, shell.fs.sumDirectoriesBelowSize(100_000))
+    }
+
+    @Test
+    fun `clears smallest directory to free up space`() {
+        // given
+        val capacity = 70_000_000
+        val spaceRequired = 30_000_000
+        val shell = Shell(Dir("/", capacity = capacity)).executeScript(sampleInput)
 
         // when
-        shell.executeScript(input)
+        val smallestDir = shell.fs.smallestDirToEnsureSpace(spaceRequired)
 
         // then
-        assertEquals(95437, shell.root.sumDirectoriesBelowSize(100000))
+        assertEquals("d", smallestDir.name)
+        assertEquals(24933642, smallestDir.size)
     }
 }
