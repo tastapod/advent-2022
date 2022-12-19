@@ -88,6 +88,10 @@ private fun day6() {
 
 private fun day7() {
     val input = Input.forDay(7)
-    val part1 = Shell().executeScript(input).root.sumDirectoriesBelowSize(100000)
+    val shell = Shell().executeScript(input)
+    val part1 = shell.fs.sumDirectoriesBelowSize(100_000)
     println("Day 7 part 1: $part1")
+
+    val part2 = shell.fs.smallestDirToEnsureSpace(30_000_000).size
+    println("Day 7 part 2: $part2")
 }
