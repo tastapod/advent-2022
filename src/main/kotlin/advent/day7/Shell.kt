@@ -4,7 +4,7 @@ data class CommandBlock(val command: String, val output: List<String> = emptyLis
 
 class Shell(val fs: Filesystem = Filesystem(Dir("/")), var currentDir: Dir = fs.root) {
 
-    constructor(root: Dir, currentDir: Dir = root): this(Filesystem(root), currentDir)
+    constructor(root: Dir): this(Filesystem(root))
 
     fun executeCommand(command: String, output: List<String> = emptyList()) =
         executeCommand(CommandBlock(command, output))
