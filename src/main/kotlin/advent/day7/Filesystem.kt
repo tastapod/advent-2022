@@ -18,6 +18,8 @@ class Dir(override val name: String, val up: Dir? = null, val contents: MutableS
     fun walkDirectories(): Iterable<Dir> =
         contents.filterIsInstance<Dir>().flatMap { it.walkDirectories() } + this
 
+    // custom `equals` and `hashCode` to avoid stack overflow from hashing links to parent
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
