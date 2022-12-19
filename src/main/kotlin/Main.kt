@@ -44,7 +44,7 @@ private fun day2() {
 }
 
 private fun day3() {
-    val input = Input.forDay(3).split("\n")
+    val input = Input.forDay(3).lines()
     val part1 = sumPriorities(input)
     println("Day 3 part 1: $part1")
 
@@ -53,7 +53,7 @@ private fun day3() {
 }
 
 private fun day4() {
-    val input = Input.forDay(4).split("\n")
+    val input = Input.forDay(4).lines()
     val part1 = countFullyContainedRanges(input)
     println("Day 4 part 1: $part1")
 
@@ -64,7 +64,7 @@ private fun day4() {
 private fun day5() {
     val input = Input.forDay(5).split("\n\n")
     val drawing = input[0]
-    val moves = input[1].split("\n")
+    val moves = input[1].lines()
 
     var stacks = parseDrawing(drawing)
     moveCrates9000(stacks, moves)
