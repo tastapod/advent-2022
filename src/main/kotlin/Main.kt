@@ -103,4 +103,7 @@ private fun day8() {
     val grid = Grid(input)
     val part1 = grid.visibleTrees().count()
     println("Day 8 part 1: $part1")
+
+    val part2 = grid.maxScenicScore()
+    println("Day 8 part 2: $part2")
 }
