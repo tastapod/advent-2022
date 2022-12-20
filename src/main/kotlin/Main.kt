@@ -15,6 +15,7 @@ import advent.day6.findStartOfMessage
 import advent.day6.findStartOfPacket
 import advent.day7.Shell
 import advent.day8.Grid
+import advent.day9.Rope
 
 fun main() {
     day1()
@@ -25,6 +26,7 @@ fun main() {
     day6()
     day7()
     day8()
+    day9()
 }
 
 private fun day1() {
@@ -106,4 +108,11 @@ private fun day8() {
 
     val part2 = grid.maxScenicScore()
     println("Day 8 part 2: $part2")
+}
+
+private fun day9() {
+    val input = Input.forDay(9).lines()
+    val rope = Rope()
+    val part1 = rope.move(input).size
+    println("Day 9 part 1: $part1")
 }
