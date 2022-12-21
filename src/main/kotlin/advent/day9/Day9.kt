@@ -30,21 +30,27 @@ enum class Direction {
     }
 }
 
-data class Rope(var head: Pos = Pos(0, 0), var tail: Pos = Pos(0, 0)) {
-    fun move(motion: String): Set<Pos> {
+class Rope(initial: Pos = Pos(0, 0)) {
+    var head = initial
+        private set(value) {
+            field = value.also { tail = tail.follow(it) }
+        }
+    var tail: Pos = initial
+        private set(value) {
+            field = value.also { tailVisited.add(it) }
+        }
+    val tailVisited = mutableSetOf(tail)
+
+    fun move(motion: String) {
         val direction = Direction.valueOf(motion[0])
         val count = motion.substring(2).toInt()
-        val tailVisited = mutableSetOf(tail)
 
         repeat(count) {
             head = head.move(direction)
-            tail = tail.follow(head).also { tailVisited.add(it) }
         }
-
-        return tailVisited
     }
 
-    fun move(motions: List<String>) = motions.fold(emptySet<Pos>()) { acc, motion -> acc + move(motion) }
+    fun move(motions: List<String>) = motions.forEach { move(it) }
 }
 
 data class Pos(val x: Int, val y: Int) {
