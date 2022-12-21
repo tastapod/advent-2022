@@ -113,6 +113,7 @@ private fun day8() {
 private fun day9() {
     val input = Input.forDay(9).lines()
     val rope = Rope()
-    val part1 = rope.move(input).size
+    rope.move(input)
+    val part1 = rope.tailVisited.size
     println("Day 9 part 1: $part1")
 }

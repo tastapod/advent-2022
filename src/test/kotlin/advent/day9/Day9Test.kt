@@ -56,16 +56,18 @@ class Day9Test {
 
     @Test
     fun `moves rope`() {
-        val rope = Rope(head = Pos(0, 0), tail = Pos(0, 0))
+        val rope = Rope(Pos(0, 0))
 
         rope.move("R 4")
-        assertEquals(Rope(Pos(4, 0), Pos(3, 0)), rope)
+        assertEquals(Pos(4, 0), rope.head)
+        assertEquals(Pos(3, 0), rope.tail)
 
         rope.move("U 4")
-        assertEquals(Rope(Pos(4, 4), Pos(4, 3)), rope)
+        assertEquals(Pos(4, 4), rope.head)
+        assertEquals(Pos(4, 3), rope.tail)
     }
 
-    val sampleRoute = """
+    private val sampleRoute = """
         R 4
         U 4
         L 3
@@ -79,9 +81,12 @@ class Day9Test {
     @Test
     fun `follows sample route`() {
         val rope = Rope()
-        val visited = rope.move(sampleRoute)
-        assertEquals(Rope(Pos(2, 2), Pos(1, 2)), rope)
-        assertEquals(13, visited.size)
+        rope.move(sampleRoute)
+
+        assertEquals(Pos(2, 2), rope.head)
+        assertEquals(Pos(1, 2), rope.tail)
+
+        assertEquals(13, rope.tailVisited.size)
     }
 }
 
