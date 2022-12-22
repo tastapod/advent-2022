@@ -15,7 +15,7 @@ import advent.day6.findStartOfMessage
 import advent.day6.findStartOfPacket
 import advent.day7.Shell
 import advent.day8.Grid
-import advent.day9.Rope
+import advent.day9.Segment
 
 fun main() {
     day1()
@@ -112,8 +112,14 @@ private fun day8() {
 
 private fun day9() {
     val input = Input.forDay(9).lines()
-    val rope = Rope()
-    rope.move(input)
-    val part1 = rope.tailVisited.size
+    val segment = Segment()
+    segment.move(input)
+    val part1 = segment.tailVisited.size
     println("Day 9 part 1: $part1")
+
+    val end = Segment(name="9")
+    val rope = (8 downTo 0).fold(end) {acc, it -> Segment(name=it.toString()).attach(acc) }
+    rope.move(input)
+    val part2 = end.headVisited.size
+    println("Day 9 part 2: $part2")
 }
