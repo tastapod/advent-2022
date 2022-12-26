@@ -2,6 +2,7 @@ import advent.Input
 import advent.day1.largestCalories
 import advent.day1.sumCalories
 import advent.day1.topThree
+import advent.day10.Series
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -27,6 +28,7 @@ fun main() {
     day7()
     day8()
     day9()
+    day10()
 }
 
 private fun day1() {
@@ -122,4 +124,14 @@ private fun day9() {
     rope.move(input)
     val part2 = end.headVisited.size
     println("Day 9 part 2: $part2")
+}
+
+private fun day10() {
+    val input = Input.forDay(10).lines()
+    val series = Series(input)
+    val part1 = series.signalStrengthDuring(20..220 step 40)
+    println("Day 10 part 1: $part1")
+
+    val part2 = series.renderLines()
+    println("Day 10 part 2:\n$part2") // ZKGRKGRK
 }
