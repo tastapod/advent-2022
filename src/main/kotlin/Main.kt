@@ -3,6 +3,7 @@ import advent.day1.largestCalories
 import advent.day1.sumCalories
 import advent.day1.topThree
 import advent.day10.Series
+import advent.day11.Monkeys
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -29,6 +30,7 @@ fun main() {
     day8()
     day9()
     day10()
+    day11()
 }
 
 private fun day1() {
@@ -134,4 +136,12 @@ private fun day10() {
 
     val part2 = series.renderLines()
     println("Day 10 part 2:\n$part2") // ZKGRKGRK
+}
+
+private fun day11() {
+    val input = Input.forDay(11)
+    val monkeys = Monkeys(input)
+    repeat(20) { monkeys.playRound() }
+    val part1 = monkeys.monkeyBusiness()
+    println("Day 11 part 1: $part1")
 }
