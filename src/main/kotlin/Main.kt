@@ -3,7 +3,9 @@ import advent.day1.largestCalories
 import advent.day1.sumCalories
 import advent.day1.topThree
 import advent.day10.Series
-import advent.day11.Monkeys
+import advent.day11.Monkey
+import advent.day11.monkeyBusiness
+import advent.day11.playRound
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -121,8 +123,8 @@ private fun day9() {
     val part1 = segment.tailVisited.size
     println("Day 9 part 1: $part1")
 
-    val end = Segment(name="9")
-    val rope = (8 downTo 0).fold(end) {acc, it -> Segment(name=it.toString()).attach(acc) }
+    val end = Segment(name = "9")
+    val rope = (8 downTo 0).fold(end) { acc, it -> Segment(name = it.toString()).attach(acc) }
     rope.move(input)
     val part2 = end.headVisited.size
     println("Day 9 part 2: $part2")
@@ -140,8 +142,14 @@ private fun day10() {
 
 private fun day11() {
     val input = Input.forDay(11)
-    val monkeys = Monkeys(input)
+    val monkeys = Monkey.parseNotes(input)
     repeat(20) { monkeys.playRound() }
     val part1 = monkeys.monkeyBusiness()
     println("Day 11 part 1: $part1")
+
+    val monkeys2 = Monkey.parseNotes(input)
+    repeat(10_000) { monkeys2.playRound(worried = false) }
+    val part2 = monkeys2.monkeyBusiness()
+    println("Day 11 part 2: $part2")
+
 }

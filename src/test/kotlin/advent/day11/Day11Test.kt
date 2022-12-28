@@ -54,11 +54,11 @@ class Day11Test {
         """.trimIndent()
 
         // when
-        val monkey = Monkey.parse(note)
+        val monkey = Monkey.parseNote(note)
 
         // then
         assertEquals(1, monkey.index)
-        assertEquals(listOf(54, 65, 75, 74), monkey.items)
+        assertEquals(listOf<Long>(54, 65, 75, 74), monkey.items)
         assertEquals(19, monkey.divisor)
         assertEquals(mapOf(true to 2, false to 0), monkey.receivers)
         assertEquals(16, monkey.operation(10))
@@ -97,51 +97,78 @@ class Day11Test {
     @Test
     fun `watches monkeys`() {
         // given
-        val monkeys = Monkeys(sampleNotes)
+        val monkeys = Monkey.parseNotes(sampleNotes)
 
         // when
         monkeys.playRound()
 
         // then
-        assertEquals(listOf(20, 23, 27, 26), monkeys.at(0).items)
-        assertEquals(listOf(2080, 25, 167, 207, 401, 1046), monkeys.at(1).items)
-        assertEquals(emptyList(), monkeys.at(2).items)
-        assertEquals(emptyList(), monkeys.at(3).items)
+        assertEquals(listOf<Long>(20, 23, 27, 26), monkeys[0].items)
+        assertEquals(listOf<Long>(2080, 25, 167, 207, 401, 1046), monkeys[1].items)
+        assertEquals(emptyList(), monkeys[2].items)
+        assertEquals(emptyList(), monkeys[3].items)
 
         // when
         repeat(19) { monkeys.playRound() }
 
         // then
-        assertEquals(listOf(10, 12, 14, 26, 34), monkeys.at(0).items)
-        assertEquals(listOf(245, 93, 53, 199, 115), monkeys.at(1).items)
-        assertEquals(emptyList(), monkeys.at(2).items)
-        assertEquals(emptyList(), monkeys.at(3).items)
+        assertEquals(listOf<Long>(10, 12, 14, 26, 34), monkeys[0].items)
+        assertEquals(listOf<Long>(245, 93, 53, 199, 115), monkeys[1].items)
+        assertEquals(emptyList(), monkeys[2].items)
+        assertEquals(emptyList(), monkeys[3].items)
     }
 
     @Test
     fun `counts monkey activity`() {
         // given
-        val monkeys = Monkeys(sampleNotes)
+        val monkeys = Monkey.parseNotes(sampleNotes)
 
         // when
         repeat(20) { monkeys.playRound() }
 
         // then
-        assertEquals(101, monkeys.at(0).inspections)
-        assertEquals(95, monkeys.at(1).inspections)
-        assertEquals(7, monkeys.at(2).inspections)
-        assertEquals(105, monkeys.at(3).inspections)
+        assertEquals(listOf(101, 95, 7, 105), monkeys.map { it.inspections })
     }
 
     @Test
     fun `calculates monkey business`() {
         // given
-        val monkeys = Monkeys(sampleNotes)
+        val monkeys = Monkey.parseNotes(sampleNotes)
 
         // when
         repeat(20) { monkeys.playRound() }
 
         // then
         assertEquals(10605, monkeys.monkeyBusiness())
+    }
+
+    @Test
+    fun `watches monkeys with no worries`() {
+        // given
+        val monkeys = Monkey.parseNotes(sampleNotes)
+
+        // when
+        monkeys.playRound(false)
+
+        // then
+        assertEquals(listOf(2, 4, 3, 6), monkeys.map { it.inspections })
+
+        // when
+        repeat(19) { monkeys.playRound(false) }
+
+        // then
+        assertEquals(listOf(99, 97, 8, 103), monkeys.map { it.inspections })
+
+        // when
+        repeat(980) { monkeys.playRound(false) }
+
+        // then
+        assertEquals(listOf(5204, 4792, 199, 5192), monkeys.map { it.inspections })
+
+        // when
+        repeat(9000) { monkeys.playRound(false) }
+
+        // then
+        assertEquals(2713310158, monkeys.monkeyBusiness())
     }
 }
