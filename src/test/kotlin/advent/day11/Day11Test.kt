@@ -2,6 +2,7 @@ package advent.day11
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.expect
 
 class Day11Test {
     @Test
@@ -132,14 +133,16 @@ class Day11Test {
 
     @Test
     fun `calculates monkey business`() {
-        // given
-        val monkeys = Monkey.parseNotes(sampleNotes)
+        expect(10605) {
+            // given
+            val monkeys = Monkey.parseNotes(sampleNotes)
 
-        // when
-        repeat(20) { monkeys.playRound() }
+            // when
+            repeat(20) { monkeys.playRound() }
 
-        // then
-        assertEquals(10605, monkeys.monkeyBusiness())
+            // then
+            monkeys.monkeyBusiness()
+        }
     }
 
     @Test
@@ -147,28 +150,24 @@ class Day11Test {
         // given
         val monkeys = Monkey.parseNotes(sampleNotes)
 
-        // when
-        monkeys.playRound(false)
+        expect(listOf(2, 4, 3, 6)) {
+            monkeys.playRound(false)
+            monkeys.map { it.inspections }
+        }
 
-        // then
-        assertEquals(listOf(2, 4, 3, 6), monkeys.map { it.inspections })
+        expect(listOf(99, 97, 8, 103)) {
+            repeat(19) { monkeys.playRound(false) }
+            monkeys.map { it.inspections }
+        }
 
-        // when
-        repeat(19) { monkeys.playRound(false) }
+        expect(listOf(5204, 4792, 199, 5192)) {
+            repeat(980) { monkeys.playRound(false) }
+            monkeys.map { it.inspections }
+        }
 
-        // then
-        assertEquals(listOf(99, 97, 8, 103), monkeys.map { it.inspections })
-
-        // when
-        repeat(980) { monkeys.playRound(false) }
-
-        // then
-        assertEquals(listOf(5204, 4792, 199, 5192), monkeys.map { it.inspections })
-
-        // when
-        repeat(9000) { monkeys.playRound(false) }
-
-        // then
-        assertEquals(2713310158, monkeys.monkeyBusiness())
+        expect(2713310158) {
+            repeat(9000) { monkeys.playRound(false) }
+            monkeys.monkeyBusiness()
+        }
     }
 }

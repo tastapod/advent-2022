@@ -6,6 +6,7 @@ import advent.day10.Series
 import advent.day11.Monkey
 import advent.day11.monkeyBusiness
 import advent.day11.playRound
+import advent.day12.RouteMap
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -33,6 +34,7 @@ fun main() {
     day9()
     day10()
     day11()
+    day12()
 }
 
 private fun day1() {
@@ -142,14 +144,20 @@ private fun day10() {
 
 private fun day11() {
     val input = Input.forDay(11)
-    val monkeys = Monkey.parseNotes(input)
+    var monkeys = Monkey.parseNotes(input)
     repeat(20) { monkeys.playRound() }
     val part1 = monkeys.monkeyBusiness()
     println("Day 11 part 1: $part1")
 
-    val monkeys2 = Monkey.parseNotes(input)
-    repeat(10_000) { monkeys2.playRound(worried = false) }
-    val part2 = monkeys2.monkeyBusiness()
+    monkeys = Monkey.parseNotes(input)
+    repeat(10_000) { monkeys.playRound(worried = false) }
+    val part2 = monkeys.monkeyBusiness()
     println("Day 11 part 2: $part2")
+}
 
+private fun day12() {
+    val input = Input.forDay(12)
+    val routeMap = RouteMap.parseMap(input)
+    val part1 = routeMap.shortestRoute()
+    println("Day 12 part 1: $part1")
 }
