@@ -119,4 +119,14 @@ class Day12Test {
 
         assertEquals(31, routeMap.shortestRoute())
     }
+
+    @Test
+    fun `finds shortest route for given elevation`() {
+        val routeMap = RouteMap.parseMap(sampleHeightMap)
+
+        println(routeMap.target)
+        val shortest = routeMap.shortestRouteFromHeight(1)
+
+        assertEquals(29, shortest)
+    }
 }

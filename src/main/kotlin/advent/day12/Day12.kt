@@ -35,7 +35,10 @@ data class RouteMap(
             }
         }
 
-    private fun dijkstra(): Map<Elevation, Int> {
+    private fun dijkstra(
+        start: Elevation = this.start,
+        canReach: (here: Elevation, neighbour: Elevation) -> Boolean
+    ): Map<Elevation, Int> {
         val distances = elevations.associateWith { if (it == start) 0 else BIG_VALUE }.toMutableMap()
         val remaining =
             PriorityQueue<Elevation> { e1, e2 -> distances[e1]!! - distances[e2]!! }.apply { addAll(elevations) }
@@ -46,7 +49,7 @@ data class RouteMap(
             visited += here
 
             neighbours(here.pos).minus(visited).forEach { neighbour ->
-                val cost = if (neighbour.height - here.height <= 1) distances[here]!! + 1 else BIG_VALUE
+                val cost = if (canReach(here, neighbour)) distances[here]!! + 1 else BIG_VALUE
                 if (cost < distances[neighbour]!!) {
                     distances[neighbour] = cost
                     remaining.remove(neighbour)
@@ -58,32 +61,37 @@ data class RouteMap(
         return distances.toMap()
     }
 
-    fun shortestRoute() = dijkstra().getValue(target)
+    fun shortestRoute() = dijkstra(start) { here, neighbour -> neighbour.height - here.height <= 1 }.getValue(target)
 
     fun heightAt(row: Int, col: Int) = elevationsByPosition[Position(row, col)]!!.height
 
-    companion object {
-        fun parseMap(sourceMap: String): RouteMap {
-            val rows = sourceMap.lines()
-            val numRows = rows.size
-            val numCols = rows[0].length
+    fun shortestRouteFromHeight(height: Int) =
+        dijkstra(target) { here, neighbour -> neighbour.height - here.height >= -1 }
+            .filterKeys { it.height == height }
+            .minOf { it.value }
 
-            var start: Elevation? = null
-            var target: Elevation? = null
+companion object {
+    fun parseMap(sourceMap: String): RouteMap {
+        val rows = sourceMap.lines()
+        val numRows = rows.size
+        val numCols = rows[0].length
 
-            val heights = rows.mapIndexed { row, rowChars ->
-                rowChars.mapIndexed { col, ch ->
-                    Elevation(Position(row, col), ch.toHeight()).also {
-                        when (ch) {
-                            'S' -> start = it
-                            'E' -> target = it
-                        }
+        var start: Elevation? = null
+        var target: Elevation? = null
+
+        val heights = rows.mapIndexed { row, rowChars ->
+            rowChars.mapIndexed { col, ch ->
+                Elevation(Position(row, col), ch.toHeight()).also {
+                    when (ch) {
+                        'S' -> start = it
+                        'E' -> target = it
                     }
                 }
-            }.flatten()
+            }
+        }.flatten()
 
-            return RouteMap(start!!, target!!, numRows, numCols, heights)
-        }
+        return RouteMap(start!!, target!!, numRows, numCols, heights)
     }
+}
 }
 

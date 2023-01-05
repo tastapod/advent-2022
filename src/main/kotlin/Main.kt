@@ -160,4 +160,7 @@ private fun day12() {
     val routeMap = RouteMap.parseMap(input)
     val part1 = routeMap.shortestRoute()
     println("Day 12 part 1: $part1")
+
+    val part2 = routeMap.shortestRouteFromHeight(1)
+    println("Day 12 part 2: $part2")
 }
