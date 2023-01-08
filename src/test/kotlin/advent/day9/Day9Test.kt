@@ -124,7 +124,6 @@ class Day9Test {
         smallRoute.forEach { motion ->
             rope.move(motion)
         }
-        Grid(5, 6).printHeadVisited(end)
 
         // then
         assertEquals(1, end.tailVisited.size)
@@ -151,7 +150,6 @@ class Day9Test {
         bigRoute.forEach { motion ->
             rope.move(motion)
         }
-        Grid(21, 26).printHeadVisited(end)
 
         // then
         assertEquals(36, end.headVisited.size)
