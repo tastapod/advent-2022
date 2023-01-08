@@ -7,6 +7,7 @@ import advent.day11.Monkey
 import advent.day11.monkeyBusiness
 import advent.day11.playRound
 import advent.day12.RouteMap
+import advent.day13.correctPairs
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -35,6 +36,7 @@ fun main() {
     day10()
     day11()
     day12()
+    day13()
 }
 
 private fun day1() {
@@ -163,4 +165,10 @@ private fun day12() {
 
     val part2 = routeMap.shortestRouteFromHeight(1)
     println("Day 12 part 2: $part2")
+}
+
+private fun day13() {
+    val input = Input.forDay(13)
+    val part1 = correctPairs(input.split("\n\n")).sum()
+    println("Day 13 part 1: $part1")
 }
