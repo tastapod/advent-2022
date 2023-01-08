@@ -72,11 +72,11 @@ class Segment(initial: Pos = Pos(0, 0), private val name: String = ".") {
     }
 
     fun renderHeadVisited(grid: Grid) {
-        headVisited.forEach() { pos -> grid.set(pos, '#') }
+        headVisited.forEach { pos -> grid.set(pos, '#') }
     }
 
     fun renderTailVisited(grid: Grid) {
-        tailVisited.forEach() { pos -> grid.set(pos, '#') }
+        tailVisited.forEach { pos -> grid.set(pos, '#') }
     }
 
     override fun toString(): String {
@@ -91,16 +91,19 @@ class Grid(rows: Int, cols: Int) {
         cells[pos.y][pos.x] = ch
     }
 
+    @Suppress("unused")
     fun printHeads(segment: Segment) {
         segment.renderHeads(this)
         printCells("Knot heads")
     }
 
+    @Suppress("unused")
     fun printTailVisited(segment: Segment) {
         segment.renderTailVisited(this)
         printCells("Tail visited")
     }
 
+    @Suppress("unused")
     fun printHeadVisited(segment: Segment) {
         segment.renderHeadVisited(this)
         printCells("Head visited")
