@@ -81,4 +81,4 @@ fun dividerPositions(packets: List<Packet>) =
     (packets + DIVIDERS).asSequence().sorted().withIndex().filter { packet -> packet.value in DIVIDERS }.map { it.index + 1 }
 
 fun decoderKey(packets: List<Packet>) =
-    dividerPositions(packets).reduce { acc, i -> acc * i }
+    dividerPositions(packets).reduce(Int::times)
