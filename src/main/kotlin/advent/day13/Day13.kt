@@ -1,25 +1,24 @@
 package advent.day13
 
-sealed class TExpr {
-    abstract operator fun compareTo(that: TExpr): Int
-}
+sealed class TExpr : Comparable<TExpr>
 
 data class TValue(val value: Int) : TExpr() {
-    override operator fun compareTo(that: TExpr) = when (that) {
-        is TValue -> value.compareTo(that.value)
-        is TList -> toTList().compareTo(that)
+    override operator fun compareTo(other: TExpr) = when (other) {
+        is TValue -> value.compareTo(other.value)
+        is TList -> toTList().compareTo(other)
     }
+
     fun toTList() = TList(0, listOf(this))
 }
 
 data class TList(val depth: Int, val ts: List<TExpr> = emptyList()) : TExpr() {
-    override operator fun compareTo(that: TExpr): Int {
-        when (that) {
-            is TValue -> return compareTo(that.toTList())
+    override operator fun compareTo(other: TExpr): Int {
+        when (other) {
+            is TValue -> return compareTo(other.toTList())
 
             is TList -> {
                 val thisIter = ts.iterator()
-                val thatIter = that.ts.iterator()
+                val thatIter = other.ts.iterator()
 
                 while (thisIter.hasNext()) {
                     val mine = thisIter.next()
@@ -41,12 +40,17 @@ data class TList(val depth: Int, val ts: List<TExpr> = emptyList()) : TExpr() {
     }
 }
 
+typealias Packet = TList
+
 fun parsePacket(line: String) = parseList(1, line.toMutableList())
+
+fun parsePackets(lines: List<String>) = lines.filter { it.isNotEmpty() }.map { parsePacket(it) }
 
 private fun parseValue(chars: MutableList<Char>) = TValue(
     generateSequence {
         if (chars.first().isDigit()) chars.removeFirst() else null
-    }.toList().toCharArray().concatToString().toInt())
+    }.toList().toCharArray().concatToString().toInt()
+)
 
 private fun parseList(depth: Int, chars: MutableList<Char>): TList {
     val contents = mutableListOf<TExpr>()
@@ -67,3 +71,14 @@ fun correctPairs(pairs: List<String>) = pairs.withIndex().filter { pair ->
     val (left, right) = pair.value.split("\n")
     parsePacket(left) < parsePacket(right)
 }.map { it.index + 1 }
+
+val DIVIDERS = """
+    [[2]]
+    [[6]]
+    """.trimIndent().split("\n").map { parsePacket(it) }.toSet()
+
+fun dividerPositions(packets: List<Packet>) =
+    (packets + DIVIDERS).asSequence().sorted().withIndex().filter { packet -> packet.value in DIVIDERS }.map { it.index + 1 }
+
+fun decoderKey(packets: List<Packet>) =
+    dividerPositions(packets).reduce { acc, i -> acc * i }
