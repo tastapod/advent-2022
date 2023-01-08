@@ -77,4 +77,11 @@ class Day13Test {
         val pairs = sampleInput.split("\n\n")
         assertEquals(listOf(1, 2, 4, 6), correctPairs(pairs))
     }
+
+    @Test
+    fun `sorts packets and finds dividers`() {
+        val packets = parsePackets(sampleInput.split("\n"))
+        assertEquals(setOf(10, 14), dividerPositions(packets).toSet())
+        assertEquals(140, decoderKey(packets))
+    }
 }

@@ -8,6 +8,8 @@ import advent.day11.monkeyBusiness
 import advent.day11.playRound
 import advent.day12.RouteMap
 import advent.day13.correctPairs
+import advent.day13.decoderKey
+import advent.day13.parsePackets
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -171,4 +173,7 @@ private fun day13() {
     val input = Input.forDay(13)
     val part1 = correctPairs(input.split("\n\n")).sum()
     println("Day 13 part 1: $part1")
+
+    val part2 = decoderKey(parsePackets(input.lines()))
+    println("Day 13 part 2: $part2")
 }
