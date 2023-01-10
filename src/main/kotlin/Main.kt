@@ -10,6 +10,7 @@ import advent.day12.RouteMap
 import advent.day13.correctPairs
 import advent.day13.decoderKey
 import advent.day13.parsePackets
+import advent.day14.Cave
 import advent.day2.playPart1Game
 import advent.day2.playPart2Game
 import advent.day3.sumPriorities
@@ -39,6 +40,7 @@ fun main() {
     day11()
     day12()
     day13()
+    day14()
 }
 
 private fun day1() {
@@ -176,4 +178,15 @@ private fun day13() {
 
     val part2 = decoderKey(parsePackets(input.lines()))
     println("Day 13 part 2: $part2")
+}
+
+private fun day14() {
+    val input = Input.forDay(14)
+    val cave1 = Cave.fromScan(input)
+    val part1 = cave1.fillWithSand()
+    println("Day 14 part 1: $part1")
+
+    val cave2 = Cave.fromScan(input).withFloor()
+    val part2 = cave2.fillWithSand()
+    println("Day 14 part 2: $part2")
 }
