@@ -27,23 +27,23 @@ import advent.day8.Grid
 import advent.day9.Segment
 
 fun main() {
-    day1()
-    day2()
-    day3()
-    day4()
-    day5()
-    day6()
-    day7()
-    day8()
-    day9()
-    day10()
-    day11()
-    day12()
-    day13()
-    day14()
+    solveDay1()
+    solveDay2()
+    solveDay3()
+    solveDay4()
+    solveDay5()
+    solveDay6()
+    solveDay7()
+    solveDay8()
+    solveDay9()
+    solveDay10()
+    solveDay11()
+    solveDay12()
+    solveDay13()
+    solveDay14()
 }
 
-private fun day1() {
+private fun solveDay1() {
     val input = Input.forDay(1)
     val part1 = largestCalories(sumCalories(input))
     println("Day 1 part 1: $part1")
@@ -52,7 +52,7 @@ private fun day1() {
     println("Day 1 part 2: $part2")
 }
 
-private fun day2() {
+private fun solveDay2() {
     val input = Input.forDay(2)
     val part1 = playPart1Game(input)
     println("Day 2 part 1: $part1")
@@ -61,7 +61,7 @@ private fun day2() {
     println("Day 2 part 2: $part2")
 }
 
-private fun day3() {
+private fun solveDay3() {
     val input = Input.forDay(3).lines()
     val part1 = sumPriorities(input)
     println("Day 3 part 1: $part1")
@@ -70,7 +70,7 @@ private fun day3() {
     println("Day 3 part 2: $part2")
 }
 
-private fun day4() {
+private fun solveDay4() {
     val input = Input.forDay(4).lines()
     val part1 = countFullyContainedRanges(input)
     println("Day 4 part 1: $part1")
@@ -79,7 +79,7 @@ private fun day4() {
     println("Day 4 part 2: $part2")
 }
 
-private fun day5() {
+private fun solveDay5() {
     val input = Input.forDay(5).split("\n\n")
     val drawing = input[0]
     val moves = input[1].lines()
@@ -95,7 +95,7 @@ private fun day5() {
     println("Day 5 part 2: $part2")
 }
 
-private fun day6() {
+private fun solveDay6() {
     val input = Input.forDay(6)
     val part1 = findStartOfPacket(input)
     println("Day 6 part 1: $part1")
@@ -104,7 +104,7 @@ private fun day6() {
     println("Day 6 part 2: $part2")
 }
 
-private fun day7() {
+private fun solveDay7() {
     val input = Input.forDay(7)
     val shell = Shell().executeScript(input)
     val part1 = shell.fs.sumDirectoriesBelowSize(100_000)
@@ -114,7 +114,7 @@ private fun day7() {
     println("Day 7 part 2: $part2")
 }
 
-private fun day8() {
+private fun solveDay8() {
     val input = Input.forDay(8).lines()
     val grid = Grid(input)
     val part1 = grid.visibleTrees().count()
@@ -124,7 +124,7 @@ private fun day8() {
     println("Day 8 part 2: $part2")
 }
 
-private fun day9() {
+private fun solveDay9() {
     val input = Input.forDay(9).lines()
     val segment = Segment()
     segment.move(input)
@@ -138,7 +138,7 @@ private fun day9() {
     println("Day 9 part 2: $part2")
 }
 
-private fun day10() {
+private fun solveDay10() {
     val input = Input.forDay(10).lines()
     val series = Series(input)
     val part1 = series.signalStrengthDuring(20..220 step 40)
@@ -148,7 +148,7 @@ private fun day10() {
     println("Day 10 part 2:\n$part2") // ZKGRKGRK
 }
 
-private fun day11() {
+private fun solveDay11() {
     val input = Input.forDay(11)
     var monkeys = Monkey.parseNotes(input)
     repeat(20) { monkeys.playRound() }
@@ -161,7 +161,7 @@ private fun day11() {
     println("Day 11 part 2: $part2")
 }
 
-private fun day12() {
+private fun solveDay12() {
     val input = Input.forDay(12)
     val routeMap = RouteMap.parseMap(input)
     val part1 = routeMap.shortestRoute()
@@ -171,7 +171,7 @@ private fun day12() {
     println("Day 12 part 2: $part2")
 }
 
-private fun day13() {
+private fun solveDay13() {
     val input = Input.forDay(13)
     val part1 = correctPairs(input.split("\n\n")).sum()
     println("Day 13 part 1: $part1")
@@ -180,7 +180,7 @@ private fun day13() {
     println("Day 13 part 2: $part2")
 }
 
-private fun day14() {
+private fun solveDay14() {
     val input = Input.forDay(14)
     val cave1 = Cave.fromScan(input)
     val part1 = cave1.fillWithSand()
